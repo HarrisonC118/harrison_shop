@@ -1,0 +1,15 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://192.168.32.128:3306/hshop_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted # 全局逻辑删除的实体字段名

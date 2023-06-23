@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-rebel.xml
+**/rebel.xml
 ### Eclipse ###
 .apt_generated
 .classpath
