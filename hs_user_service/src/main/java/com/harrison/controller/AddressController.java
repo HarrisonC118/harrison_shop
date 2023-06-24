@@ -2,11 +2,9 @@ package com.harrison.controller;
 
 import com.harrison.entity.Address;
 import com.harrison.service.AddressService;
+import com.harrison.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,14 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-06-23
  */
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address/v1/")
 public class AddressController {
     @Autowired
     private AddressService addressService;
 
     @PostMapping("/add")
-    public String addAddress(@RequestBody Address address) {
+    public Object addAddress(@RequestBody Address address) {
         boolean b = addressService.saveOrUpdate(address);
-        return b ? "success" : "fail";
+        return b ? JsonData.success() : JsonData.fail();
+    }
+
+    @GetMapping("/getAddressById/{id}")
+    public Object listAddress(@PathVariable String id) {
+        Address address = addressService.query().eq("id", id).one();
+        return JsonData.success(address);
     }
 }
