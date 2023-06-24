@@ -1,6 +1,8 @@
 package com.harrison.controller;
 
 import com.harrison.entity.Address;
+import com.harrison.enums.StatusCodeEnum;
+import com.harrison.exception.StatusCodeException;
 import com.harrison.service.AddressService;
 import com.harrison.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class AddressController {
     @GetMapping("/getAddressById/{id}")
     public Object listAddress(@PathVariable String id) {
         Address address = addressService.query().eq("id", id).one();
-        return JsonData.success(address);
+        throw new StatusCodeException(StatusCodeEnum.CODE_TO_ERROR);
+//        return JsonData.success(address);
     }
 }
