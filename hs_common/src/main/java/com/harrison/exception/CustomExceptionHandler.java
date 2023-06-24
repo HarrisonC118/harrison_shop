@@ -18,8 +18,8 @@ public class CustomExceptionHandler {
             StatusCodeException statusCodeException = (StatusCodeException) e;
             return JsonData.fail(statusCodeException.getCode(), statusCodeException.getMsg());
         } else {
-            log.error("非业务异常:{}", e.getMessage());
-            return JsonData.fail("后端发生错误，错误信息：" + e.getMessage());
+            log.error("系统异常:{}", e.getMessage());
+            return JsonData.fail("系统发生错误，错误信息：" + e.getMessage());
         }
     }
 }
