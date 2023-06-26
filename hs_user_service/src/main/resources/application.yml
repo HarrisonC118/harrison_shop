@@ -7,6 +7,10 @@ spring:
     url: jdbc:mysql://192.168.32.128:3306/hshop_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  redis:
+    host: 192.168.32.128
+    port: 6379
+    password: 110907
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
