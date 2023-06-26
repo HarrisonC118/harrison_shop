@@ -11,6 +11,23 @@ spring:
     host: 192.168.32.128
     port: 6379
     password: 110907
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    port: 465
+    from: 1109079622@qq.com # 发件人邮箱
+    username: 1109079622@qq.com
+    password: dddaefksrjphjegb
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+          starttls:
+            enable: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
