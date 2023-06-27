@@ -61,4 +61,12 @@ public class CommonUtil {
         }
         return false;
     }
+
+    public static String getRandomCode(int length) {
+        String code = "";
+        for (int i = 0; i < length; i++) {
+            code += (int) (Math.random() * 10);
+        }
+        return code;
+    }
 }

@@ -49,7 +49,7 @@ public class JsonData {
         return new JsonData(code, msg, data);
     }
 
-    public static JsonData definedResult(StatusCodeEnum statusCodeEnum) {
+    public static JsonData fail(StatusCodeEnum statusCodeEnum) {
         return new JsonData(statusCodeEnum.getCode(), statusCodeEnum.getMsg(), null);
     }
 

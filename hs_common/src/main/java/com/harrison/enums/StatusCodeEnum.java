@@ -14,9 +14,9 @@ public enum StatusCodeEnum {
     /**
      * 验证码
      */
-    CODE_TO_ERROR(240001, "验证码错误"),
+    CODE_TO_ERROR(240001, "手机号或邮箱格式错误"),
     CODE_LIMITED(240002, "验证码发送过快"),
-    CODE_CAPTCHA_ERROR(240101, "图形验证码错误"),
+    CODE_ERROR(240101, "验证码错误"),
     /**
      * 账号
      */

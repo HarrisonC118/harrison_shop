@@ -1,14 +1,18 @@
 package com.harrison.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.harrison.entity.bo.SendRegisterCodeParams;
+import com.harrison.enums.SendCodeEnum;
+import com.harrison.enums.StatusCodeEnum;
+import com.harrison.service.NotifyService;
 import com.harrison.utils.CommonUtil;
+import com.harrison.utils.JsonData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -26,8 +30,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class NotifyController {
     @Autowired
+    private NotifyService notifyService;
+    @Autowired
     private Producer captchaProducer;
-
     @Autowired
     private StringRedisTemplate redisTemplate;
 
@@ -55,6 +60,23 @@ public class NotifyController {
             ImageIO.write(image, "jpg", outputStream);
         } catch (IOException e) {
             log.error("验证码生成失败", e);
+        }
+    }
+
+    @PostMapping("/sendRegisterCode")
+    public JsonData sendRegisterCode(@RequestBody SendRegisterCodeParams params, HttpServletRequest request) {
+        // 校验验证码是否正确
+        String userUniqueIdentifierKeyMd5 = getUserUniqueIdentifierKey_MD5(request);
+        String correctCaptcha = redisTemplate.opsForValue().get(userUniqueIdentifierKeyMd5);
+        if (StringUtils.isNotBlank(correctCaptcha) && StringUtils.equalsIgnoreCase(correctCaptcha, params.getCaptcha())) {
+            // 使验证码失效
+            redisTemplate.delete(userUniqueIdentifierKeyMd5);
+            log.info("验证码校验成功");
+            // 发送邮件
+            return notifyService.sendCode(SendCodeEnum.USER_REGISTER, params.getTo());
+        } else {
+            log.info("验证码校验失败");
+            return JsonData.fail(StatusCodeEnum.CODE_ERROR);
         }
     }
 
