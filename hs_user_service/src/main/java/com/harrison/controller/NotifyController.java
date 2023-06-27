@@ -2,7 +2,7 @@ package com.harrison.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.harrison.entity.bo.SendRegisterCodeParams;
-import com.harrison.enums.SendCodeEnum;
+import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
 import com.harrison.service.NotifyService;
 import com.harrison.utils.CommonUtil;
@@ -73,7 +73,7 @@ public class NotifyController {
             redisTemplate.delete(userUniqueIdentifierKeyMd5);
             log.info("验证码校验成功");
             // 发送邮件
-            return notifyService.sendCode(SendCodeEnum.USER_REGISTER, params.getTo());
+            return notifyService.sendCode(BusinessName.USER_REGISTER, params.getTo());
         } else {
             log.info("验证码校验失败");
             return JsonData.fail(StatusCodeEnum.CODE_ERROR);
