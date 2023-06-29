@@ -22,7 +22,11 @@ public enum StatusCodeEnum {
      */
     ACCOUNT_REPEAT(250001, "账号重复"),
     ACCOUNT_NOT_EXIST(250002, "账号不存在"),
-    ACCOUNT_PASSWORD_ERROR(250003, "账号或密码错误");
+    ACCOUNT_PASSWORD_ERROR(250003, "账号或密码错误"),
+    /**
+     * 文件
+     */
+    FILE_UPLOAD_ERROR(260001, "文件上传失败");
 
     private final String msg;
     private final Integer code;

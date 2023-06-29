@@ -2,6 +2,7 @@ package com.harrison.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.UUID;
 
 public class CommonUtil {
     // 获取IP地址
@@ -68,5 +69,9 @@ public class CommonUtil {
             code += (int) (Math.random() * 10);
         }
         return code;
+    }
+
+    public static String generateUUID() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 32);
     }
 }
