@@ -34,3 +34,10 @@ mybatis-plus:
   global-config:
     db-config:
       logic-delete-field: isDeleted # 全局逻辑删除的实体字段名
+#  阿里云oss
+aliyun:
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tKUidLCppuh7o6Qi6qk
+    access-key-secret: wd22VcdQrjzPJEmlfR1UeyM6iBi2bK
+    bucket-name: harrison-shop
