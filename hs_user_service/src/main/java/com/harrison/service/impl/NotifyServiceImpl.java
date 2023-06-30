@@ -46,6 +46,7 @@ public class NotifyServiceImpl implements NotifyService {
             mailService.sendMail(to, MAIL_SUBJECT, String.format(MAIL_CONTENT, verificationCode));
             // 发送邮件后，将验证码存入redis
             String cacheKey = String.format(CacheNameTemplate.CHECK_CODE_KEY, businessName.name(), to);
+            // 格式：验证码_发送时间
             redisTemplate.opsForValue().set(cacheKey, verificationCode + "_" + System.currentTimeMillis(), CAPTCHA_EXPIRED_TIME, TimeUnit.MILLISECONDS);
             return JsonData.success("验证码发送成功");
         } else if (VerifyUtil.isPhone(to)) {
@@ -55,6 +56,26 @@ public class NotifyServiceImpl implements NotifyService {
         }
         return null;
     }
+
+    @Override
+    public Boolean verifyCode(BusinessName businessName, String to, String code) {
+        // 获取缓存中的验证码
+        String cacheKey = String.format(CacheNameTemplate.CHECK_CODE_KEY, businessName.name(), to);
+        String cacheValue = redisTemplate.opsForValue().get(cacheKey);
+        if (StringUtils.isNotBlank(cacheValue)) {
+            // 取出验证码
+            String[] split = cacheValue.split("_");
+            String verificationCode = split[0];
+            // 判断验证码是否正确
+            if (verificationCode.equals(code)) {
+                // 验证码正确，删除缓存
+                redisTemplate.delete(cacheKey);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 检查发送时间间隔，如果小于60秒则不发送

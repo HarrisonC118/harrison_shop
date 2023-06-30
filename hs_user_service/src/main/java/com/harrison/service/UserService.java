@@ -2,6 +2,8 @@ package com.harrison.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.harrison.entity.User;
+import com.harrison.enums.BusinessName;
+import com.harrison.utils.JsonData;
 
 /**
  * <p>
@@ -12,5 +14,13 @@ import com.harrison.entity.User;
  * @since 2023-06-23
  */
 public interface UserService extends IService<User> {
-
+    /**
+     * 用户注册
+     *
+     * @param user         用户信息
+     * @param businessName 验证码类型
+     * @param code         验证码
+     * @return 注册结果
+     */
+    JsonData register(User user, BusinessName businessName, String code);
 }

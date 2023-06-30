@@ -1,14 +1,16 @@
 package com.harrison.controller;
 
+import com.harrison.entity.User;
+import com.harrison.entity.bo.UserRegisterParams;
+import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
 import com.harrison.service.FileService;
+import com.harrison.service.UserService;
 import com.harrison.utils.JsonData;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -24,7 +26,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     @Autowired
     private FileService fileService;
+    @Autowired
+    private UserService userService;
 
+    /**
+     * 上传用户头像
+     *
+     * @param file 用户头像
+     * @return 用户头像地址
+     */
     @PostMapping("/upload_head_portrait")
     public JsonData uploadImg(@RequestPart("file") MultipartFile file) {
         String imgUrl = fileService.uploadUserImg(file);
@@ -32,5 +42,13 @@ public class UserController {
             return JsonData.fail(StatusCodeEnum.FILE_UPLOAD_ERROR);
         }
         return JsonData.success(imgUrl);
+    }
+
+    @PostMapping("/register")
+    public JsonData register(@RequestBody UserRegisterParams userRegisterParams) {
+        User user = new User();
+        BeanUtils.copyProperties(userRegisterParams, user);
+        JsonData register = userService.register(user, BusinessName.USER_REGISTER, userRegisterParams.getCode());
+        return JsonData.success(register);
     }
 }

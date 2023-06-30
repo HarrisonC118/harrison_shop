@@ -12,4 +12,14 @@ public interface NotifyService {
      * @return
      */
     JsonData sendCode(BusinessName businessName, String to);
+
+    /**
+     * 校验验证码
+     *
+     * @param businessName 验证码类型
+     * @param to           接收人
+     * @param code         验证码
+     * @return 校验结果
+     */
+    Boolean verifyCode(BusinessName businessName, String to, String code);
 }
