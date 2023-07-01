@@ -1,6 +1,7 @@
 package com.harrison.controller;
 
 import com.harrison.entity.User;
+import com.harrison.entity.bo.UserLoginParams;
 import com.harrison.entity.bo.UserRegisterParams;
 import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
@@ -49,5 +50,10 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userRegisterParams, user);
         return userService.register(user, BusinessName.USER_REGISTER, userRegisterParams.getCode());
+    }
+
+    @PostMapping("/login")
+    public JsonData login(@RequestBody UserLoginParams user) {
+        return userService.login(user);
     }
 }

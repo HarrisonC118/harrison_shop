@@ -3,6 +3,7 @@ package com.harrison.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harrison.entity.User;
+import com.harrison.entity.bo.UserLoginParams;
 import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
 import com.harrison.mapper.UserMapper;
@@ -15,6 +16,8 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -73,6 +76,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         return JsonData.fail(StatusCodeEnum.REGISTER_ERROR);
+    }
+
+    @Override
+    public JsonData login(UserLoginParams user) {
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("mail", user.getMail());
+        List<User> users = userMapper.selectList(userQueryWrapper);
+        for (User currentUser : users) {
+            String salt = currentUser.getSalt();
+            String password = currentUser.getPassword();
+            String md5Crypt = Md5Crypt.md5Crypt(user.getPassword().getBytes(), salt);
+            if (md5Crypt.equals(password)) {
+                // 登录成功
+                log.info("用户登录成功，用户信息：{}", currentUser);
+                // TODO 生成token
+                // TODO 返回token
+                return JsonData.success("登录成功");
+            }
+        }
+        return JsonData.fail(StatusCodeEnum.ACCOUNT_PASSWORD_ERROR);
     }
 
     /**

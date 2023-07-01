@@ -25,10 +25,6 @@ public class JsonData {
         return new JsonData(200, msg, data);
     }
 
-    public static JsonData success(String msg) {
-        return new JsonData(200, msg, null);
-    }
-
     public static JsonData fail() {
         return new JsonData(500, "fail", null);
     }
