@@ -74,7 +74,7 @@ public class User implements Serializable {
     /**
      * 性别;0女1男
      */
-    private Byte gender;
+    private Boolean gender;
 
     /**
      * 积分

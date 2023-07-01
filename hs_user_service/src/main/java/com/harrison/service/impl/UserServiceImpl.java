@@ -8,8 +8,10 @@ import com.harrison.enums.StatusCodeEnum;
 import com.harrison.mapper.UserMapper;
 import com.harrison.service.NotifyService;
 import com.harrison.service.UserService;
+import com.harrison.utils.CommonUtil;
 import com.harrison.utils.JsonData;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,7 +76,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
-     * 用户信息前置处理 TODO
+     * 用户信息前置处理
      * * 密码加密
      * * 生成token
      *
@@ -83,7 +85,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     private User preHandleUser(User user) {
         // 密码加密
-        // 生成token
+        String salt = "$1$" + CommonUtil.generateUUID(8);
+        String md5Crypt = Md5Crypt.md5Crypt(user.getPassword().getBytes(), salt);
+        log.info("用户密码加密后：{}，盐为：{}", md5Crypt, salt);
+        user.setSalt(salt);
+        user.setPassword(md5Crypt);
         return user;
     }
 

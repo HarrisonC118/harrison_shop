@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
         String formatTime = dateTimeFormatter.format(now);
         // 路径 user/2022/02/02/随机UUID.后缀名
         // 生成32位随机字符串
-        String randomUUID = CommonUtil.generateUUID();
+        String randomUUID = CommonUtil.generateUUID(32);
         // 新文件名
         String newFileName = randomUUID + fileSuffix;
         // 完整路径

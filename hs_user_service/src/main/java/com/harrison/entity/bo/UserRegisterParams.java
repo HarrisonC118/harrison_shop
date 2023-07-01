@@ -38,11 +38,6 @@ public class UserRegisterParams {
     private Boolean gender;
 
     /**
-     * 积分
-     */
-    private Integer points;
-
-    /**
      * 邮箱
      */
     private String mail;

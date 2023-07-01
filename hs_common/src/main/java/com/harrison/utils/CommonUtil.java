@@ -71,7 +71,8 @@ public class CommonUtil {
         return code;
     }
 
-    public static String generateUUID() {
-        return UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+    // 生成UUID
+    public static String generateUUID(int length) {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, length);
     }
 }

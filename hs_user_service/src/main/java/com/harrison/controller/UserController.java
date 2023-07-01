@@ -48,7 +48,6 @@ public class UserController {
     public JsonData register(@RequestBody UserRegisterParams userRegisterParams) {
         User user = new User();
         BeanUtils.copyProperties(userRegisterParams, user);
-        JsonData register = userService.register(user, BusinessName.USER_REGISTER, userRegisterParams.getCode());
-        return JsonData.success(register);
+        return userService.register(user, BusinessName.USER_REGISTER, userRegisterParams.getCode());
     }
 }
