@@ -7,16 +7,19 @@ import com.harrison.entity.bo.UserLoginParams;
 import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
 import com.harrison.mapper.UserMapper;
+import com.harrison.model.LoginUser;
 import com.harrison.service.NotifyService;
 import com.harrison.service.UserService;
 import com.harrison.utils.CommonUtil;
 import com.harrison.utils.JsonData;
+import com.harrison.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -90,9 +93,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             if (md5Crypt.equals(password)) {
                 // 登录成功
                 log.info("用户登录成功，用户信息：{}", currentUser);
-                // TODO 生成token
-                // TODO 返回token
-                return JsonData.success("登录成功");
+                // 生成token
+                LoginUser loginUser = new LoginUser(currentUser.getId(), currentUser.getNickname(), currentUser.getHeadPortrait(), currentUser.getMail());
+                String s = JwtUtil.generateJwt(loginUser);
+                HashMap<String, String> map = new HashMap<>();
+                map.put("token", s);
+                return JsonData.success("登录成功", map);
             }
         }
         return JsonData.fail(StatusCodeEnum.ACCOUNT_PASSWORD_ERROR);

@@ -8,6 +8,7 @@ import com.harrison.service.NotifyService;
 import com.harrison.utils.CommonUtil;
 import com.harrison.utils.JsonData;
 import com.harrison.utils.VerifyUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Slf4j
 public class NotifyServiceImpl implements NotifyService {
     @Autowired
     private MailService mailService;
@@ -43,6 +45,7 @@ public class NotifyServiceImpl implements NotifyService {
         // 判断是手机号还是邮箱
         if (VerifyUtil.isEmail(to)) {
             // 发送邮件
+            log.info("发送邮件验证码：{}", verificationCode);
             mailService.sendMail(to, MAIL_SUBJECT, String.format(MAIL_CONTENT, verificationCode));
             // 发送邮件后，将验证码存入redis
             String cacheKey = String.format(CacheNameTemplate.CHECK_CODE_KEY, businessName.name(), to);

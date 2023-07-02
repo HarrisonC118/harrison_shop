@@ -51,6 +51,7 @@ public class NotifyController {
     @GetMapping("/captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) {
         String text = captchaProducer.createText();
+        log.info("生成验证码：{}", text);
         // 将验证码存入redis
         String userUniqueIdentifierKeyMd5 = getUserUniqueIdentifierKey_MD5(request);
         redisTemplate.opsForValue().set(userUniqueIdentifierKeyMd5, text, CAPTCHA_EXPIRED_TIME, TimeUnit.MILLISECONDS);
