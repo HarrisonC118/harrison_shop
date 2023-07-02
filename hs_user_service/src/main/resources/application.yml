@@ -15,9 +15,9 @@ spring:
     default-encoding: UTF-8
     host: smtp.qq.com
     port: 465
-    from: 1109079622@qq.com # 发件人邮箱
-    username: 1109079622@qq.com
-    password: dddaefksrjphjegb
+    from: ${mail.from} # 发件人邮箱
+    username: ${mail.username}
+    password: ${mail.password}
     properties:
       mail:
         smtp:
@@ -42,6 +42,6 @@ mybatis-plus:
 aliyun:
   oss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5tKUidLCppuh7o6Qi6qk
-    access-key-secret: wd22VcdQrjzPJEmlfR1UeyM6iBi2bK
+    access-key-id: ${aliyun.access.key.id}
+    access-key-secret: ${aliyun.access.key.secret}
     bucket-name: harrison-shop
