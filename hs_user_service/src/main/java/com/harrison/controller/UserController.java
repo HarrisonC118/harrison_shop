@@ -56,4 +56,9 @@ public class UserController {
     public JsonData login(@RequestBody UserLoginParams user) {
         return userService.login(user);
     }
+
+    @GetMapping("/testInterceptor")
+    public JsonData testInterceptor() {
+        return JsonData.success();
+    }
 }

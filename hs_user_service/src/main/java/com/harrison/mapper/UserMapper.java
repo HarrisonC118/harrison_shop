@@ -2,6 +2,7 @@ package com.harrison.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harrison.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.harrison.entity.User;
  * @author harrison
  * @since 2023-06-23
  */
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }

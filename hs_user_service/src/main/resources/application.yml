@@ -4,11 +4,11 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:mysql://192.168.179.128:3306/hshop_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${local.host}:3306/hshop_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
   redis:
-    host: 192.168.179.128
+    host: ${local.host}
     port: 6379
     password: 110907
   mail:

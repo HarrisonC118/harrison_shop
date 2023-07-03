@@ -26,6 +26,7 @@ public enum StatusCodeEnum {
     ACCOUNT_PASSWORD_ERROR(250003, "账号或密码错误"),
     REGISTER_ERROR(250004, "注册失败"),
     EMAIL_REGISTERED(250005, "邮箱已注册"),
+    ACCOUNT_NOT_LOGIN(250006, "Account not logged in."),
     /**
      * 文件
      */
