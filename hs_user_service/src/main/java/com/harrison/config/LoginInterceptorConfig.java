@@ -21,6 +21,10 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
 //       excludePathPatterns()表示我们要放行哪些（表示不用经过拦截器）
 //       excludePathPatterns("/","/login")表示放行“/”与“/login”请求
 //       如果有静态资源的时候可以在这个地方放行
-                .excludePathPatterns("/api/user/v1/login", "/api/user/v1/register", "/api/user/v1/upload_head_portrait", "/api/notify/v1/**");
+                .excludePathPatterns("/api/user/v1/login",
+                        "/api/user/v1/register",
+                        "/api/user/v1/upload_head_portrait",
+                        "/api/notify/v1/**"
+                );
     }
 }

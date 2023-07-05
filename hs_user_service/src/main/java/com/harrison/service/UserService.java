@@ -32,4 +32,11 @@ public interface UserService extends IService<User> {
      * @return 登录结果
      */
     JsonData login(UserLoginParams user);
+
+    /**
+     * 获取用户信息
+     *
+     * @return 用户信息
+     */
+    JsonData getUserDetail();
 }

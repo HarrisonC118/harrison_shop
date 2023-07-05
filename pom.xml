@@ -20,7 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <spring.boot.version>2.7.12</spring.boot.version>
+        <spring.boot.version>2.7.13</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <alibaba.cloud.version>2021.0.4.0</alibaba.cloud.version>
         <mybatisplus.boot.starter.version>3.5.3.1</mybatisplus.boot.starter.version>

@@ -3,9 +3,11 @@ package com.harrison.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harrison.entity.User;
+import com.harrison.entity.VO.UserDetailVO;
 import com.harrison.entity.bo.UserLoginParams;
 import com.harrison.enums.BusinessName;
 import com.harrison.enums.StatusCodeEnum;
+import com.harrison.interceptor.LoginInterceptor;
 import com.harrison.mapper.UserMapper;
 import com.harrison.model.LoginUser;
 import com.harrison.service.NotifyService;
@@ -16,6 +18,7 @@ import com.harrison.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +107,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return JsonData.fail(StatusCodeEnum.ACCOUNT_PASSWORD_ERROR);
     }
 
+    @Override
+    public JsonData getUserDetail() {
+        LoginUser loginUser = LoginInterceptor.threadLocal.get();
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("id", loginUser.getId());
+        User user = userMapper.selectOne(userQueryWrapper);
+        UserDetailVO userDetailVO = new UserDetailVO();
+        BeanUtils.copyProperties(user, userDetailVO);
+        return JsonData.success(userDetailVO);
+    }
+
     /**
      * 用户信息前置处理
      * * 密码加密
@@ -121,6 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(md5Crypt);
         return user;
     }
+
 
     /**
      * 新用户注册后的逻辑 TODO

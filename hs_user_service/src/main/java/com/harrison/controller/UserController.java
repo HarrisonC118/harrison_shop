@@ -57,8 +57,8 @@ public class UserController {
         return userService.login(user);
     }
 
-    @GetMapping("/testInterceptor")
-    public JsonData testInterceptor() {
-        return JsonData.success();
+    @GetMapping("/detail")
+    public JsonData detail() {
+        return userService.getUserDetail();
     }
 }
