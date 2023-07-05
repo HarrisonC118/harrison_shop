@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
+    public static ThreadLocal<LoginUser> threadLocal = new ThreadLocal<>();
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String accessToken = request.getHeader("token");
@@ -36,6 +38,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                 loginUser.setNickname(nickname);
                 loginUser.setHeadPortrait(headPortrait);
                 loginUser.setMail(mail);
+                // 将loginUser对象存入threadLocal中
+                threadLocal.set(loginUser);
                 return true;
             }
         }
